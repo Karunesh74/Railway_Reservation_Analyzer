@@ -48,11 +48,13 @@ Input: `bookings.csv`, menu option "Bookings per train"
 
 **Terminal output**
 
-![Test Case 1 output](<test case 1.png>)
+<img width="1412" height="728" alt="test case 1" src="https://github.com/user-attachments/assets/857b51c7-e9bb-418c-b013-5da0c36cc5f0" />
+
 
 **Bar chart**
 
-![Test Case 1 graph](<test case 1 graph.png>)
+<img width="640" height="480" alt="test case 1 graph" src="https://github.com/user-attachments/assets/c2ffe6bd-833c-4459-962f-931d52716d02" />
+
 
 ### Test Case 2: Boundary / Minimum Input
 
@@ -60,21 +62,25 @@ Input: `one.csv` (only one data row), menu option "Revenue per train"
 
 **Terminal output**
 
-![Test Case 2 output](<test case 2.png>)
+<img width="1451" height="681" alt="test case 2" src="https://github.com/user-attachments/assets/6b6ffa30-760c-482f-85e7-ea43f2169053" />
+
 
 **Bar chart**
 
-![Test Case 2 graph](<test case 2 graph.png>)
+<img width="640" height="480" alt="test case 2 graph" src="https://github.com/user-attachments/assets/5e9c8a93-82dd-4607-a3a5-cbdb2d1e9e34" />
+
 
 ### Test Case 3: Invalid Input
 
 **(a) Missing file:** `missing.csv`
 
-![Test Case 3a output](<test case 3 (a).png>)
+<img width="1512" height="201" alt="test case 3 (a)" src="https://github.com/user-attachments/assets/48759b62-bc28-4859-bd01-3ebd59ba84b2" />
+
 
 **(b) Invalid fare:** `extra.csv` (extra row `1011,Gondwana,SL,abc,Confirmed`)
 
-![Test Case 3b output](<test case 3 (b).png>)
+<img width="1507" height="133" alt="test case 3 (b)" src="https://github.com/user-attachments/assets/427fc989-4b63-4aff-bdf6-b2fba03d741d" />
+
 
 ### Test Case 4: Different Valid Scenario
 
@@ -82,11 +88,13 @@ Input: `bookings.csv`, menu option "Revenue per train"
 
 **Terminal output**
 
-![Test Case 4 output](<test case 4.png>)
+<img width="1523" height="378" alt="test case 4" src="https://github.com/user-attachments/assets/35667b30-bb57-4237-877b-a47a40cb72e1" />
+
 
 **Bar chart**
 
-![Test Case 4 graph](<test case 4 graph.png>)
+<img width="640" height="480" alt="test case 4 graph" src="https://github.com/user-attachments/assets/628c5ef9-c3a9-4cad-b970-dccd64efbdf0" />
+
 
 ## Concepts Covered
 
