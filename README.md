@@ -1,4 +1,9 @@
 # Railway Reservation Analyzer (PS 76)
+## Student Details
+- **Name:** Karunesh Baghwar
+- **Class/Section:** SA16 section-M
+- **ERP:** RU-26-00283
+
 
 A Python program that reads railway booking data from a CSV file and shows how many bookings each train has and how much revenue each train earns. The results are also shown as bar charts.
 
