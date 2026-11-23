@@ -12,10 +12,11 @@ Python 3, Pandas (data reading and grouping), Matplotlib (bar charts), and the `
 
 1. The program asks for the CSV file name. If nothing is entered, it uses `bookings.csv` by default.
 2. It checks whether the file exists. If not, it shows an error message instead of crashing.
-3. The data is read into a Pandas DataFrame, and extra spaces in the Train and Status columns are removed.
-4. The Fare column is converted to numbers using `pd.to_numeric` with `errors="coerce"`. Invalid values such as "abc" become NaN, and those rows are skipped with a warning that shows the PNR.
-5. The number of valid records analysed is displayed.
-6. A menu lets the user choose an option by number or by name.
+3. The file is read into a Pandas DataFrame inside a `try/except` block. An empty or damaged file shows an error message. The required columns are also checked.
+4. Extra spaces in the Train and Status columns are removed.
+5. The Fare column is converted to numbers using `pd.to_numeric` with `errors="coerce"`. Invalid values such as "abc" become NaN, and those rows are skipped with a warning that shows the PNR.
+6. The number of valid records analysed is displayed.
+7. A menu lets the user choose an option by number or by name.
 
 ## Features
 
@@ -23,11 +24,93 @@ Python 3, Pandas (data reading and grouping), Matplotlib (bar charts), and the `
 - **Revenue per train:** only tickets with Confirmed status are considered. The fares are grouped by train and summed. The program shows each train's revenue, the total confirmed revenue and a bar chart.
 - **Status summary:** shows the count of Confirmed, Waiting and Cancelled tickets.
 
-## Error Handling
+## Error Handling (with the exact lines of code)
 
-- A missing file shows: `Error: File 'missing.csv' not found.`
-- A row with an invalid fare is skipped with a warning: `Warning: Row with PNR 1011 skipped - invalid fare.`
-- An invalid menu choice shows a message and the menu is displayed again.
+The program handles errors in `read_file()`, `revenue_per_train()` and `main()`. Each problem is explained below with the line of code that handles it.
+
+### 1. Missing file
+
+```python
+if not os.path.exists(filename):
+    print("Error: File '" + filename + "' not found.")
+    return None
+```
+
+- `os.path.exists(filename)` checks whether the file is present in the folder.
+- If it is not present, a clear message is printed: `Error: File 'missing.csv' not found.`
+- `return None` stops `read_file()` and sends `None` back, which means "no data".
+- In `main()`, the lines `if data is None: return` end the program safely, so the menu is never shown without data.
+
+### 2. Empty, damaged or unreadable file
+
+```python
+try:
+    data = pd.read_csv(filename)
+except pd.errors.EmptyDataError:
+    print("Error: File '" + filename + "' is empty.")
+    return None
+except (pd.errors.ParserError, UnicodeDecodeError):
+    print("Error: File '" + filename + "' is not a proper CSV file.")
+    return None
+except OSError:
+    print("Error: File '" + filename + "' could not be opened.")
+    return None
+```
+
+- `try:` runs the risky line `pd.read_csv(filename)`. If an error happens, Python jumps to the matching `except` block instead of stopping the program.
+- `pd.errors.EmptyDataError` is raised when the file has no data. The program prints "is empty" and returns `None`.
+- `pd.errors.ParserError` and `UnicodeDecodeError` are raised when the file is not a proper text CSV file (for example, an Excel or image file). The program prints "is not a proper CSV file".
+- `OSError` covers other problems such as a folder name given as the file name or no permission to open the file. It is written last because the other errors are special cases of it.
+
+### 3. Required column missing
+
+```python
+needed = ["PNR", "Train", "Fare", "Status"]
+missing = [col for col in needed if col not in data.columns]
+if len(missing) > 0:
+    print("Error: Missing column(s) in file: " + ", ".join(missing))
+    return None
+```
+
+- `needed` lists the columns the program uses.
+- The second line builds a list of the columns that are not present in the file.
+- If the list is not empty, the program prints which column is missing (for example `Fare`) and returns `None`. Without this check, the next lines would crash with a `KeyError`.
+
+### 4. Invalid or blank fare
+
+```python
+data["Fare"] = pd.to_numeric(data["Fare"], errors="coerce")
+bad_rows = data[data["Fare"].isna()]
+for pnr in bad_rows["PNR"]:
+    print("Warning: Row with PNR " + str(pnr) + " skipped - invalid fare.")
+data = data.dropna(subset=["Fare"])
+```
+
+- `pd.to_numeric(..., errors="coerce")` converts Fare to numbers. A wrong value such as `abc` does not cause an error; it becomes NaN.
+- `data["Fare"].isna()` finds the rows whose fare is NaN, and `bad_rows` holds those rows.
+- The `for` loop prints a warning with the PNR of every bad row. `str(pnr)` is used because the PNR is a number and must be joined with text.
+- `dropna(subset=["Fare"])` removes those rows, so the rest of the data is analysed normally.
+
+### 5. No Confirmed tickets
+
+```python
+confirmed = data[data["Status"] == "Confirmed"]
+if len(confirmed) == 0:
+    print("No confirmed tickets, revenue is Rs. 0")
+    return
+```
+
+- The first line keeps only the Confirmed tickets.
+- If there are none, a message is printed and the function returns. This avoids an empty chart or an error.
+
+### 6. Wrong menu choice
+
+```python
+else:
+    print("Invalid choice, please enter 1 to 4 or the menu name.")
+```
+
+- This `else` runs when the user types anything that is not 1 to 4 or an option name. The message is printed and the `while True` loop shows the menu again.
 
 ## Results on Sample Data
 
@@ -98,8 +181,8 @@ Input: `bookings.csv`, menu option "Revenue per train"
 
 ## Concepts Covered
 
-Functions, loops, conditional statements, file handling, exception and error handling, CSV reading with Pandas, filtering, grouping (`groupby`), and data visualization with Matplotlib.
+Functions, loops, conditional statements, file handling, exception and error handling (`os.path.exists`, `try/except`), CSV reading with Pandas, filtering, grouping (`groupby`), and data visualization with Matplotlib.
 
 ## Conclusion
 
-The program meets all the requirements of the problem statement. It handles missing files and invalid data without crashing, and it gives clear train-wise results with charts for both bookings and revenue.
+The program meets all the requirements of the problem statement. It handles missing, empty and damaged files and invalid data without crashing, and it gives clear train-wise results with charts for both bookings and revenue.
