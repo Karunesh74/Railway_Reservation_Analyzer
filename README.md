@@ -31,8 +31,7 @@ A Python program that reads railway booking data from a CSV file and shows how m
 | `bookings.csv` | Sample data (10 rows) |
 | `one.csv` | Test file with only one data row (Test Case 2) |
 | `extra.csv` | Sample data plus one row with an invalid fare (Test Case 3b) |
-| `summary.md` | Project summary |
-| `test case ... .png` | Screenshots of the test case outputs |
+| `Summary.md` | Project summary with test case screenshots |
 
 ## Input file format
 
