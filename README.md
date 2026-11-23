@@ -1,9 +1,9 @@
 # Railway Reservation Analyzer (PS 76)
+
 ## Student Details
 - **Name:** Karunesh Baghwar
 - **Class/Section:** SA16 section-M
 - **ERP:** RU-26-00283
-
 
 A Python program that reads railway booking data from a CSV file and shows how many bookings each train has and how much revenue each train earns. The results are also shown as bar charts.
 
@@ -15,7 +15,7 @@ A Python program that reads railway booking data from a CSV file and shows how m
 - Shows **bookings per train** with a bar chart
 - Shows **revenue per train** (only Confirmed tickets) with a bar chart
 - Shows a **status summary** (Confirmed, Waiting and Cancelled tickets)
-- Shows an error message if the file is missing, instead of crashing
+- Shows an error message instead of crashing if the file is missing, empty or not a proper CSV file, or if a required column is missing
 
 ## Technologies used
 
@@ -46,6 +46,7 @@ PNR,Train,Class,Fare,Status
 ```
 
 `Status` can be Confirmed, Waiting or Cancelled.
+The program uses the columns `PNR`, `Train`, `Fare` and `Status`. If one of these is missing, it shows an error message.
 
 ## How to run
 
@@ -104,6 +105,14 @@ Total confirmed revenue: Rs. 8540
 | 3b. Invalid fare | `extra.csv` | `Warning: Row with PNR 1011 skipped - invalid fare.` and `Valid records analysed: 10` |
 | 4. Different valid scenario | `bookings.csv`, Revenue per train | Rajdhani Rs. 4100, Gondwana Rs. 2540, Shatabdi Rs. 1900, total Rs. 8540 |
 
+### Additional checks (error handling)
+
+| Input | Result |
+|---|---|
+| Empty file | `Error: File 'empty.csv' is empty.` |
+| File that is not a proper CSV | `Error: File 'bin.csv' is not a proper CSV file.` |
+| File without the `Fare` column | `Error: Missing column(s) in file: Fare` |
+
 ## Concepts used
 
-Functions, loops, conditional statements, file handling, error handling, Pandas (CSV reading, filtering, `groupby`), and Matplotlib bar charts.
+Functions, loops, conditional statements, file handling, error handling (`os.path.exists`, `try/except`), Pandas (CSV reading, filtering, `groupby`), and Matplotlib bar charts.
