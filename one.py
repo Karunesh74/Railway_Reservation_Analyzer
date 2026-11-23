@@ -13,7 +13,25 @@ def read_file(filename):
         print("Error: File '" + filename + "' not found.")
         return None
 
-    data = pd.read_csv(filename)
+    # try to read the file, handle the problems of an empty or damaged file
+    try:
+        data = pd.read_csv(filename)
+    except pd.errors.EmptyDataError:
+        print("Error: File '" + filename + "' is empty.")
+        return None
+    except (pd.errors.ParserError, UnicodeDecodeError):
+        print("Error: File '" + filename + "' is not a proper CSV file.")
+        return None
+    except OSError:
+        print("Error: File '" + filename + "' could not be opened.")
+        return None
+
+    # the program needs these columns, so check that they are present
+    needed = ["PNR", "Train", "Fare", "Status"]
+    missing = [col for col in needed if col not in data.columns]
+    if len(missing) > 0:
+        print("Error: Missing column(s) in file: " + ", ".join(missing))
+        return None
 
     # remove spaces around the text so that matching works properly
     data["Train"] = data["Train"].str.strip()
