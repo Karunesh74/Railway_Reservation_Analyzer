@@ -141,7 +141,7 @@ Input: `bookings.csv`, menu option "Bookings per train"
 
 ### Test Case 2: Boundary / Minimum Input
 
-Input: `one.csv` (only one data row), menu option "Revenue per train"
+Input: `bookings.csv` containing only one data row (`1001,Shatabdi,CC,950,Confirmed`), menu option "Revenue per train"
 
 **Terminal output**
 
@@ -160,9 +160,12 @@ Input: `one.csv` (only one data row), menu option "Revenue per train"
 <img width="1512" height="201" alt="test case 3 (a)" src="https://github.com/user-attachments/assets/48759b62-bc28-4859-bd01-3ebd59ba84b2" />
 
 
-**(b) Invalid fare:** `extra.csv` (extra row `1011,Gondwana,SL,abc,Confirmed`)
+**(b) Invalid fare:** `bookings.csv` with the sample rows plus the extra row `1011,Gondwana,SL,abc,Confirmed`
 
-<img width="1507" height="133" alt="test case 3 (b)" src="https://github.com/user-attachments/assets/427fc989-4b63-4aff-bdf6-b2fba03d741d" />
+<img width="737" height="200" alt="test case 3 (b)" src="https://github.com/user-attachments/assets/be3f7868-1cc9-44f0-9874-ff2054c4893b" />
+
+
+
 
 
 ### Test Case 4: Different Valid Scenario
