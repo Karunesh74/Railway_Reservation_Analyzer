@@ -29,8 +29,8 @@ A Python program that reads railway booking data from a CSV file and shows how m
 |---|---|
 | `railway.py` | Main program |
 | `bookings.csv` | Sample data (10 rows) |
-| `one.csv` | Test file with only one data row (Test Case 2) |
-| `extra.csv` | Sample data plus one row with an invalid fare (Test Case 3b) |
+| `one.csv` | Test data: `bookings.csv` with only one data row (Test Case 2) |
+| `extra.csv` | Test data: `bookings.csv` plus one row with an invalid fare (Test Case 3b) |
 | `Summary.md` | Project summary with test case screenshots |
 
 ## Input file format
@@ -99,9 +99,9 @@ Total confirmed revenue: Rs. 8540
 | Test case | Input | Expected result |
 |---|---|---|
 | 1. Normal input | `bookings.csv`, Bookings per train | Gondwana 4, Rajdhani 3, Shatabdi 3, total 10, bar chart with 3 bars |
-| 2. Minimum input | `one.csv`, Revenue per train | Shatabdi Rs. 950, total Rs. 950, bar chart with 1 bar |
+| 2. Minimum input | `bookings.csv` with only one data row, Revenue per train | Shatabdi Rs. 950, total Rs. 950, bar chart with 1 bar |
 | 3a. Missing file | `missing.csv` | `Error: File 'missing.csv' not found.` |
-| 3b. Invalid fare | `extra.csv` | `Warning: Row with PNR 1011 skipped - invalid fare.` and `Valid records analysed: 10` |
+| 3b. Invalid fare | `bookings.csv` with the sample rows plus the extra row `1011,Gondwana,SL,abc,Confirmed` | `Warning: Row with PNR 1011 skipped - invalid fare.` and `Valid records analysed: 10` |
 | 4. Different valid scenario | `bookings.csv`, Revenue per train | Rajdhani Rs. 4100, Gondwana Rs. 2540, Shatabdi Rs. 1900, total Rs. 8540 |
 
 ### Additional checks (error handling)
